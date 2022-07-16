@@ -2,6 +2,8 @@ console.log(`Starting my program`);
 const inquirer = require('inquirer');
 const Manager = require('./lib/manager');
 var async = require("async");
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
 
 
 const employeesArr = [];
@@ -92,11 +94,21 @@ const engineerPrompt = (cb) => {
              name: "github",
              message: "Enter the engineers GitHub username:"
          },
-     ]);
+     ])
+     .then((answers) => {
+        console.log(answers);
+    
+        // Add a engineer to engineer class
+        const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+        
+        // Add the manager to the list of employees
+        employeesArr.push(engineer);
+        addMore();
+    })
  };
  
 //  Questions for intern prompt
- const internPrompt = async () => {
+ const internPrompt = () => {
      return inquirer.prompt([
           
           {
@@ -129,7 +141,18 @@ const engineerPrompt = (cb) => {
               name: "school",
               message: "Enter the interns school: "
           }
-      ]);
+      ])
+      .then((answers) => {
+        console.log(answers);
+    
+        // Add a engineer to engineer class
+        const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
+        
+        // Add the manager to the list of employees
+        employeesArr.push(intern);
+        addMore();
+        
+    })
   };
  
 const menu = () => {
@@ -187,4 +210,5 @@ managerPrompt()
     addMore();
     
 })
+
 
