@@ -96,14 +96,13 @@ const engineerPrompt = (cb) => {
          },
      ])
      .then((answers) => {
-        console.log(answers);
     
         // Add a engineer to engineer class
         const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
         
         // Add the manager to the list of employees
         employeesArr.push(engineer);
-        addMore();
+        menu();
     })
  };
  
@@ -143,14 +142,13 @@ const engineerPrompt = (cb) => {
           }
       ])
       .then((answers) => {
-        console.log(answers);
     
         // Add a engineer to engineer class
         const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
         
         // Add the manager to the list of employees
         employeesArr.push(intern);
-        addMore();
+        menu();
         
     })
   };
@@ -160,7 +158,7 @@ const menu = () => {
         {
             type: "list",
             name: "nextStep",
-            message: "What would you like to do?",
+            message: "Would you want to add a employee or intern?",
             choices: ["Add an engineer", "Add an intern", "Exit"]
         }
     ])
@@ -174,40 +172,21 @@ const menu = () => {
                 break;
             case "Exit":
                 console.log("Goodbye!");
-                connection.end();
                 break;
         }
     })
 }
 
-const addMore = () => {
-    inquirer.prompt([
-            {
-                type: "confirm",
-                message: "Would you want to add a employee or intern?",
-                name: "addMore",
-            },
-        ])
-        .then((answer) => {
-            if (answer.addMore === true) {
-                menu();
-            } else {
-                console.log("Goodbye!");
-                connection.end();
-            }
-        });
-}
-
 managerPrompt()
 .then((answers) => {
-    console.log(answers);
-
     // Add a manager to manager class
     const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNum);
     
     // Add the manager to the list of employees
     employeesArr.push(manager);
-    addMore();
+
+    // Go back to menu
+    menu();
     
 })
 
