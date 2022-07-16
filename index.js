@@ -186,22 +186,5 @@ managerPrompt()
     employeesArr.push(manager);
     addMore();
     
-    // Depending on which choice you make, invoke a different prompt
-    // menu().then((choice) => {
-    //     console.log(choice.nextStep);
-        
-    //     if (choice.nextStep === 'Add an engineer') {
-    //         engineerPrompt();
-          
-    //     } else if (choice.nextStep === 'Add an intern') {
-    //         internPrompt();
-    //     }     
-        
-    // })
-    
 })
 
-// menu();
-const addEngineer = (answers) => {
-    c
-}
