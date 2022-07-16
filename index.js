@@ -1,8 +1,9 @@
 console.log(`Starting my program`);
 const inquirer = require('inquirer');
+const Manager = require('./lib/manager');
 
 
-const employees = [];
+const employeesArr = [];
 
 // Use inquirer to gather manager information
 const managerPrompt = () => {
@@ -10,7 +11,7 @@ const managerPrompt = () => {
     {
         type: 'input',
         message: 'Enter team managers name:',
-        name: 'firstName',
+        name: 'name',
         validate: (value) => {
             if (value) {
                 return true
@@ -26,6 +27,7 @@ const managerPrompt = () => {
                 return true
             } else {return `Please enter a response`}
         }
+        
     },
     {
         type: 'input',
@@ -56,7 +58,7 @@ const managerPrompt = () => {
 )}
 
 // Questions for engineer prompt
-const engineerPrompt = () => {
+const engineerPrompt = (cb) => {
     return inquirer.prompt([
          
          {
@@ -129,11 +131,40 @@ const engineerPrompt = () => {
       ]);
   };
  
-
+const menu = () => {
+    return inquirer.prompt([
+        {
+            type: "list",
+            name: "nextStep",
+            message: "What would you like to do now?",
+            choices: ["Add an engineer", "Add an intern", "Finish building my team"]
+        }
+    ])
+}
 
 managerPrompt()
 .then((answers) => {
-    console.log(answers)
+    console.log(answers);
+
+    // Add a manager to manager class
+    const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNum);
+    
+    // Add the manager to the list of employees
+    employeesArr.push(manager);
+    
+    // Depending on which choice you make, invoke a different prompt
+    menu().then((choice) => {
+        console.log(choice.nextStep);
+        
+        if (choice.nextStep === 'Add an engineer') {
+            engineerPrompt()
+          
+        } else if (choice.nextStep === 'Add an intern') {
+            internPrompt();
+        }     
+
+    })
+    
 })
 
 
