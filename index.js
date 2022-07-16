@@ -1,6 +1,7 @@
 console.log(`Starting my program`);
 const inquirer = require('inquirer');
 const Manager = require('./lib/manager');
+var async = require("async");
 
 
 const employeesArr = [];
@@ -95,7 +96,7 @@ const engineerPrompt = (cb) => {
  };
  
 //  Questions for intern prompt
- const internPrompt = () => {
+ const internPrompt = async () => {
      return inquirer.prompt([
           
           {
@@ -132,14 +133,46 @@ const engineerPrompt = (cb) => {
   };
  
 const menu = () => {
-    return inquirer.prompt([
+    inquirer.prompt([
         {
             type: "list",
             name: "nextStep",
-            message: "What would you like to do now?",
-            choices: ["Add an engineer", "Add an intern", "Finish building my team"]
+            message: "What would you like to do?",
+            choices: ["Add an engineer", "Add an intern", "Exit"]
         }
     ])
+    .then((answer) => {
+        switch (answer.nextStep) {
+            case "Add an engineer":
+                engineerPrompt();
+                break;
+            case "Add an intern":
+                internPrompt();
+                break;
+            case "Exit":
+                console.log("Goodbye!");
+                connection.end();
+                break;
+        }
+    })
+}
+
+const addMore = () => {
+    inquirer.prompt([
+            {
+                type: "confirm",
+                message: "Would you want to add a employee or intern?",
+                name: "addMore",
+            },
+        ])
+        .then((answer) => {
+            if (answer.addMore === true) {
+                menu();
+            } else {
+                console.log("Goodbye!");
+                connection.end();
+            }
+        });
 }
 
 managerPrompt()
@@ -151,20 +184,24 @@ managerPrompt()
     
     // Add the manager to the list of employees
     employeesArr.push(manager);
+    addMore();
     
     // Depending on which choice you make, invoke a different prompt
-    menu().then((choice) => {
-        console.log(choice.nextStep);
+    // menu().then((choice) => {
+    //     console.log(choice.nextStep);
         
-        if (choice.nextStep === 'Add an engineer') {
-            engineerPrompt()
+    //     if (choice.nextStep === 'Add an engineer') {
+    //         engineerPrompt();
           
-        } else if (choice.nextStep === 'Add an intern') {
-            internPrompt();
-        }     
-
-    })
+    //     } else if (choice.nextStep === 'Add an intern') {
+    //         internPrompt();
+    //     }     
+        
+    // })
     
 })
 
-
+// menu();
+const addEngineer = (answers) => {
+    c
+}
