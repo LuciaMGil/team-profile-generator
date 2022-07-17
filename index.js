@@ -177,7 +177,7 @@ const menu = () => {
                 internPrompt();
                 break;
             case "Exit":
-                // Create file
+                // Create html file from exported render function
                 fs.writeFile(outputPath, render(employeesArr), function(err) {
 
                     if (err) {
