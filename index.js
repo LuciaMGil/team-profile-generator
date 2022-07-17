@@ -182,9 +182,11 @@ const menu = () => {
 
                     if (err) {
                       return console.log(err);
+                    } else {
+                      console.log("Success! your page has been created!")  
                     }
                   
-                    console.log("Success! your page has been created!")
+                    
                 });
                   
                 break;
