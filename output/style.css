@@ -1,0 +1,19 @@
+.team-heading {
+    background-color: rgb(56, 75, 92);
+    color: rgb(250, 248, 242);
+    padding-top: 20px;
+    height: 100px;
+
+}
+.card {
+    margin: 5px;
+    border-radius: 15px;
+    
+}
+
+.my-container{
+    width: auto;
+}
+.card-header{
+    background-color: rgb(229, 238, 252);
+}

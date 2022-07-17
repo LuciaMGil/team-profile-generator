@@ -1,10 +1,16 @@
 console.log(`Starting my program`);
-const inquirer = require('inquirer');
 const Manager = require('./lib/manager');
-var async = require("async");
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
+const fs = require("fs");
+const inquirer = require('inquirer');
+const path = require("path");
 
+
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
+
+const render = require("./lib/htmlRenderer");
 
 const employeesArr = [];
 
@@ -171,7 +177,16 @@ const menu = () => {
                 internPrompt();
                 break;
             case "Exit":
-                console.log("Goodbye!");
+                // Create file
+                fs.writeFile(outputPath, render(employeesArr), function(err) {
+
+                    if (err) {
+                      return console.log(err);
+                    }
+                  
+                    console.log("Success! your page has been created!")
+                });
+                  
                 break;
         }
     })
